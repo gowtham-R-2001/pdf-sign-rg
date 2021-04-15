@@ -9,6 +9,7 @@ let signedContent = null;
 let inc = false, dec = false;
 
 let download = false;
+let pdfCtx = null;
 
 function clearBody() 
 {
@@ -124,7 +125,7 @@ function imageSizeIncrease()
 {
     let signedContentDiv = document.querySelector('#signed-content-div');
     let image = document.querySelector('#signed-content-div img');
-    
+
     if(!inc)
     {
         signedContentDiv.style.height = `${80 + 20}px`;
@@ -178,6 +179,7 @@ function delImage()
     add.textContent = "Add signature";
 }
 
+
 function downloadpdf()
 {
     let Helperbuttons = document.querySelectorAll("#signed-content-div button");
@@ -188,9 +190,23 @@ function downloadpdf()
         signedContentDiv.style.border = "none";
         Helperbuttons.forEach(button => {
             button.style.display = "none";
-        })
+        });
     }
-    html2pdf().from(document.querySelector(".content-holder")).save();
+
+    var opt = {
+        margin: 1,
+        filename: 'signed_doc.pdf',
+        image: {type: 'jpeg', quality: 2},
+        html2canvas: {scale: 5},
+        jsPdf: {unit: 'in', format: 'letter', orientation: 'portrait'}
+    }
+
+    html2pdf().set(opt).from(document.querySelector('.content-holder')).save().then(data => {
+        console.log('Success',data);
+    })
+    .catch(err => {
+        console.log('Error occured !',err);
+    });
 }
 
 
@@ -232,12 +248,13 @@ function displayPdf(pdfFile)
             $('#signed-content-div').draggable();
 
             let canvas = document.querySelector('.pdf-holder'); 
-            let viewport = page.getViewport(3);
+            pdfCtx =  canvas.getContext('2d');
+            let viewport = page.getViewport(5);
             canvas.width = viewport.width;
             canvas.height = viewport.height;
 
             page.render({
-                canvasContext: canvas.getContext('2d'),
+                canvasContext: pdfCtx,
                 viewport: viewport
             })
         })
@@ -294,16 +311,34 @@ function dosign(e)
 
     inputFile.addEventListener("change",() => {
         let file = inputFile.files[0];
+
+        if(file.size/1024/1024 > 12)  {
+            alert('File size should be less than or equal to 12MB');
+            return;
+        }
+
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {displayPdf(reader.result)};
-    })
+    });
+
+    drag.addEventListener('dragover',() => {
+        drag.style.border = '2px solid #000';
+    });
+
+    drag.addEventListener('dragleave',() => {
+        drag.style.border = '2px dashed rgba(0,0,0,0.2)';
+    });
 
     upload.addEventListener("click",() => inputFile.click());
     events.forEach(event => drag.addEventListener(event,(e) => e.preventDefault()));
 
     drag.addEventListener('drop',(e) => {
         let file = e.dataTransfer.files[0];
+        if(file.size/1024/1024 > 12) {
+            alert('File size should be less than or equal to 12MB');
+            return;
+        }
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {displayPdf(reader.result)};
