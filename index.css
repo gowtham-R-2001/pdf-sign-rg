@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+.mycls {
+    height: 200px;
+    width: 200px;
+    background: pink;
+    margin: 100px;
+}
+
+img {
+    height: 150px;
+    width: 180px;
+    z-index: 1000;
+    margin-top: 400px;
+}
+
+.ui-wrapper {
+    border: 1px solid red;
+}
+
+.pdf-holder {
+    border: 1px solid #000;
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 4px solid rgba(0,0,0,0.2);
+    background: #FFF;
+    z-index: 100;
+}
+
+#input-file {
+    display: none;
+}
+
+.drag-holder {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dragzone {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    border: 2px dashed rgba(0,0,0,0.2);
+}
+
+.dragzone span {
+    font-size: 2rem;
+    margin: 5px;
+}
+
+.btn.btn-success {
+    max-width: fit-content;
+    font-size: 12pt;
+    padding: 10px 25px 10px 25px;
+    outline: none;
+}
+
+.note {
+    display: block;
+    width: fit-content;
+    margin: auto;
+}
+
+.sign-page-holder {
+    height: 100vh;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sign-page-holder button {
+    margin-top: 20px;
+}
+
+.content-holder {
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    overflow: hidden;
+    /* border: 1px solid blue; */
+}
+
+.ui-draggable, .ui-draggable-handle {
+    
+}
+
+
+#signed-content-div {
+    display: none;
+    position: absolute;
+    height: 80px;
+    width: 180px;
+    overflow: hidden;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #000;
+}
+
+#signed-content-div img {
+    position: absolute;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+}
+
+#signed-content-div .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 20px;
+    max-width: 30px;
+    font-size: 10pt;
+    padding: 3px;
+    z-index: 9000;
+    outline: none;
+}
+
+#signed-content-div .btn-holder {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: -20px;
+    width: fit-content;
+}
+
+.btn-holder button {
+    margin-left: 4px;
+}
+
+.del-holder {
+    position: absolute;
+    left: 2px;
+    top: -20px;
+    z-index: 9000;
+    border: none;
+    outline: none;
+}
+
+.fa.fa-trash {
+    color: #cc0000;
+}
+
+
+.sign-modal-holder {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .4s ease;
+    transform: scale(0);
+    top: 0;
+    bottom: 0;
+    z-index: 300;
+    background: rgba(0,0,0,0.5);
+}
+
+.sign-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 89%;
+    width: 75%;
+    background-color: #FFF;
+}
+
+.sign-modal .heading-holder {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    font-size: 11pt;
+    padding: 10px;
+}
+
+.sign-sect-holder {
+    height: 80%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+.sign-sect-holder canvas {
+    height: 100%;
+    width: 100%;
+}
+
+.sign-sect-holder span {
+    align-self: flex-end;
+    margin-right: 30px;
+    font-size: 12pt;
+}
+
+.sign-modal button {
+    align-self: flex-end;
+    margin: 5px 30px 0 0; 
+}
+
+.ui-resizable-handle {
+    border: 1px solid #000;
+    background: #fff;
+    width: 10px;
+    height: 10px;
+}
+
+
+
+@media(max-width: 495px) 
+{
+    .sign-modal {
+        width: 95%;
+    }
+
+    .note {
+        margin: 4px;
+        text-align: center;
+    }
+}
